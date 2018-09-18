@@ -16,5 +16,5 @@ class Post < ApplicationRecord
 
   belongs_to :user
 
-  has_one :photo
+  has_one :photo, inverse_of: :post
 end
