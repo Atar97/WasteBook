@@ -34,6 +34,11 @@ class User < ApplicationRecord
 
   has_many :likes, inverse_of: :user
 
+  has_many :liked_posts,
+  through: :likes,
+  source: :likeable,
+  source_type: :Post
+
   def self.find_by_credentials(username, pw)
     user = User.find_by(username: username)
     if user
@@ -65,5 +70,6 @@ class User < ApplicationRecord
     self.session_token = User.token
     self.save
   end
+
 
 end

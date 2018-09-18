@@ -32,4 +32,10 @@ ActiveRecord::Base.transaction do
       commentable_type: 'Post', commentable_id: posts[2].id}
     ])
 
+  Like.destroy_all
+
+  likes = Like.create!([
+    {user_id: users.first.id, likeable_type: :Post, likeable_id: posts.first.id}
+    ])
+
 end
