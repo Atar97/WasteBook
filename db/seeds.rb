@@ -15,4 +15,21 @@ ActiveRecord::Base.transaction do
     {fname: 'Kim', lname: 'Cotant', dob: '2/10/1956', admin: false,
       email: 'kim@email.com' , phone: '6082123921', password: 'password' }
     ])
+
+  Post.destroy_all
+
+  posts = Post.create!([
+    {body: "I like running", user_id: users.first.id},
+    {body: "Magic is fun", user_id: users.first.id},
+    {body: "I like running", user_id: users[1].id}
+    ])
+
+  Comment.destroy_all
+  comments = Comment.create!([
+    {body: 'Hey me too!', user_id: users[1].id,
+      commentable_type: 'Post', commentable_id: posts.first.id},
+    {body: 'Hey me too!', user_id: users[0].id,
+      commentable_type: 'Post', commentable_id: posts[2].id}
+    ])
+
 end

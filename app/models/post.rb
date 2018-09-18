@@ -10,4 +10,11 @@
 #
 
 class Post < ApplicationRecord
+
+  include Likeable
+  include Commentable
+
+  belongs_to :user
+
+  has_one :photo
 end

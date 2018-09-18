@@ -17,13 +17,22 @@
 #
 
 class User < ApplicationRecord
+
   validates :password_digest, :fname, :lname, :session_token,
    :dob, :email, presence: true
-   
+
   validates :email, :phone, uniqueness: true
   validates :password, length: {minimum: 6, allow_nil: true}
   validates :phone, length: {is: 10, allow_nil: true}
   before_validation :ensure_session_token
+
+  has_many :posts, inverse_of: :user
+
+  has_many :photos, inverse_of: :user
+
+  has_many :comments, inverse_of: :user
+
+  has_many :likes, inverse_of: :user
 
   def self.find_by_credentials(username, pw)
     user = User.find_by(username: username)
