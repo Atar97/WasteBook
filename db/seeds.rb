@@ -8,31 +8,32 @@
 
 ActiveRecord::Base.transaction do
   User.destroy_all
-
-  users = User.create!([
-    {fname: 'Austin', lname: 'Cotant', dob: '5/5/1991', admin: true, gender: 'M',
-      email: 'austin@email.com' , phone: '6087726844', password: 'password' },
-    {fname: 'Kim', lname: 'Cotant', dob: '2/10/1956', admin: false,
-      email: 'kim@email.com' , phone: '6082123921', password: 'password' }
-    ])
-
   Post.destroy_all
+  Comment.destroy_all
+  Like.destroy_all
+
+  austin = User.create!({fname: 'Austin', lname: 'Cotant', dob: '5/5/1991', admin: true, gender: 'M',
+      email: 'austin@email.com' , phone: '6087726844', password: 'password' })
+
+  oscar = User.create!({fname: 'Oscar', lname: 'The_Grouch', dob: '10/11/1969', admin: false,
+      email: 'oscar@email.com' , phone: '8727422699', password: 'sesamest' })
+
+  diana = User.create!({fname: 'Diana', lname: 'Dianoga', dob: '1/1/1', admin: false,
+      email: 'vodran@email.com' , phone: '1332847827', password: 'starwars' })
 
   posts = Post.create!([
-    {body: "I like running", user_id: users.first.id},
-    {body: "Magic is fun", user_id: users.first.id},
-    {body: "I like running", user_id: users[1].id}
+    {body: "I like running", user_id: austin.id},
+    {body: "Magic is fun", user_id: austin.id},
+    {body: "Scram", user_id: oscar.id},
+    {body: "I think there's something alive in here", user_id: diana.id}
     ])
 
-  Comment.destroy_all
   comments = Comment.create!([
-    {body: 'Hey me too!', user_id: users[1].id,
+    {body: 'I like to run to my trash can', user_id: oscar.id,
       commentable_type: 'Post', commentable_id: posts.first.id},
-    {body: 'Hey me too!', user_id: users[0].id,
-      commentable_type: 'Post', commentable_id: posts[2].id}
+    {body: 'Hey me too!', user_id: austin.id,
+      commentable_type: 'Post', commentable_id: posts.first.id}
     ])
-
-  Like.destroy_all
 
   likes = Like.create!([
     {user_id: users.first.id, likeable_type: :Post, likeable_id: posts.first.id}
